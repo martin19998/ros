@@ -1,5 +1,5 @@
 Project Purpose:
-This project simulates a scenario, where two cars drive on a crossing.
+This project simulates a scenario, where two cars drive towards a crossing.
 The distances and velocitys are chosen on purpose that a crash occurs if no other action is executed.
 Including sensors (laser range finder and usb-camera) publish their datas and the reaction time for
 different sensors and their location is recorded. The goal is to create a dataset of different use-cases
