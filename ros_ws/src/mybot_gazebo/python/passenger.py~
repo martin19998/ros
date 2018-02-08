@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+# ROS python api with lots of handy ROS functions
+import rospy
+
+# to be able to publish Twist data (and move the robot)
+from geometry_msgs.msg import Twist
+
+class passengerSimpleBehavior(object):
+    '''
+    Exposes a behaviour for the Grizzly robot which acts as a passenger
+    '''
+    def __init__(self):
+        '''
+        Class constructor: will get executed at the moment
+        of object creation
+        '''
+        # register node in ROS network
+        rospy.init_node('passenger_walkin', anonymous=False)
+        # print message in terminal
+        rospy.loginfo('Passenger started walking !')
+        # setup publisher to later on move the pioneer base
+        self.pub_cmd_vel = rospy.Publisher('/grizzly/cmd_vel', Twist, queue_size=1)
+        # define member variable and initialize with a big value
+   
+    
+    def move_passenger(self):
+        '''
+        Move the passenger with constant speed
+        '''
+        # create empty message of Twist type (check http://docs.ros.org/api/geometry_msgs/html/msg/Twist.html)
+        twist_msg = Twist()
+        # linear speed
+        twist_msg.linear.x = 1.5
+        twist_msg.linear.y = 0.0
+        twist_msg.linear.z = 0.0
+        # angular speed
+        twist_msg.angular.x = 0.0
+        twist_msg.angular.y = 0.0
+        twist_msg.angular.z = 0.0
+	
+	self.pub_cmd_vel.publish(twist_msg)
+        # sleep for a small amount of time
+        rospy.sleep(0.1)
+
+
+    def run_behavior(self):
+        while not rospy.is_shutdown():
+            self.move_passenger()
+
+
+if __name__ == '__main__':
+    # create object of the class passengerSimpleBehavior (constructor will get executed!)
+    my_object = passengerSimpleBehavior()
+    # call run_behavior method of class pioneerSimpleBehavior
+    my_object.run_behavior()
