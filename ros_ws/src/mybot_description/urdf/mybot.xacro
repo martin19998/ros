@@ -2,10 +2,11 @@
 
 <robot name="myrobot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-
+<!-- Globale Variablen um die Kameragröße und -masse zu verändern -->
   <xacro:property name="cameraSize" value="0.05"/>
   <xacro:property name="cameraMass" value="0.1"/>
 
+<!-- Hier werden die mybot.gazebo, materials und macros files implementiert-->
   <xacro:include filename="$(find mybot_description)/urdf/mybot.gazebo" />
   <xacro:include filename="$(find mybot_description)/urdf/materials.xacro" />
   <xacro:include filename="$(find mybot_description)/urdf/macros.xacro" />
@@ -23,13 +24,14 @@
           izz="0.1"
       />
     </inertial>
-
+<!-- Collision gibt den Rahmen des Objekts Chassis an, den es bei einer Kollision beachten soll -->
     <collision name='collision'>
       <geometry>
         <box size=".8 .4 .2"/>
       </geometry>
     </collision>
 
+<!-- visual ist die Größe des Chassis, das tatsächlich angezeigt wird in der Simulation-->
     <visual name='chassis_visual'>
       <origin xyz="0 0 0" rpy=" 0 0 0"/>
       <geometry>
@@ -37,7 +39,7 @@
       </geometry>
     </visual>
 
-
+<!-- Caster ist das Runde dritte Rad am Chassis, dass ursprüngliche dafür verwendet wurde, damit das Fahrzeug nicht umfällt.-->
     <collision name='caster_collision'>
       <origin xyz="-0.15 0 -0.05" rpy=" 0 0 0"/>
       <geometry>
@@ -63,7 +65,7 @@
     </visual>
   </link>
 
-
+<!-- Der Link Name für das linke Rad. -->
   <link name="left_wheel">
     <!--origin xyz="0.1 0.13 0.1" rpy="0 1.5707 1.5707"/-->
     <collision name="collision">
@@ -168,7 +170,7 @@
   </link>
 
 
-
+<!-- Mit den Joint Type sind die Räder und das Chassis verbunden. Es ist vom Typ Continous, damit es sich drehen kann -->
 <joint type="continuous" name="right_backwheel_hinge">
     <origin xyz="-0.4 -0.3 0" rpy="0 0 0"/>
     <child link="right_backwheel"/>
@@ -180,7 +182,7 @@
 
 
 
-
+<!-- Mit den Joint Type sind die Räder und das Chassis verbunden. Es ist vom Typ Continous, damit es sich drehen kann -->
  <joint type="continuous" name="left_backwheel_hinge">
     <origin xyz="-0.4 0.3 0" rpy="0 0 0"/>
     <child link="left_backwheel"/>
@@ -191,7 +193,7 @@
   </joint>
 
 
-
+<!-- Mit den Joint Type sind die Räder und das Chassis verbunden. Es ist vom Typ Continous, damit es sich drehen kann -->
   <joint type="continuous" name="left_wheel_hinge">
     <origin xyz="0.2 0.3 0" rpy="0 0 0"/>
     <child link="left_wheel"/>
@@ -200,7 +202,8 @@
     <limit effort="100" velocity="100"/>
     <joint_properties damping="0.0" friction="0.0"/>
   </joint>
-
+  
+<!-- Mit den Joint Type sind die Räder und das Chassis verbunden. Es ist vom Typ Continous, damit es sich drehen kann -->
   <joint type="continuous" name="right_wheel_hinge">
     <origin xyz="0.2 -0.3 0" rpy="0 0 0"/>
     <child link="right_wheel"/>
@@ -210,7 +213,7 @@
     <joint_properties damping="0.0" friction="0.0"/>
   </joint>
 
-
+<!-- Mit den Link Type werden die Dimensionen der Kamera festgelegt. In box size wurden oben festgelegte globale Variablen verwendet -->
 <link name="camera">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -235,6 +238,7 @@
     </inertial>
   </link>
 
+  <!-- Joint gibt an, an welchem Punkt der Kameralink mit dem Chassis verbunden ist. -->
   <joint name="camera_joint" type="fixed">
     <axis xyz="0 1 0" />
     <origin xyz=".4 0 0" rpy="0 0 0"/>
@@ -242,7 +246,7 @@
     <child link="camera"/>
 </joint>
 
-
+  <!-- Joint gibt an, an welchem Punkt der Hokyolink mit dem Chassis verbunden ist. -->
 <joint name="hokuyo_joint" type="fixed">
     <axis xyz="0 1 0" />
     <origin xyz=".37 0 .12" rpy="0 0 0"/>
@@ -250,7 +254,7 @@
     <child link="hokuyo"/>
   </joint>
 
-  <!-- Hokuyo Laser -->
+  <!-- Hokuyo Laser Link legt die physischen Dimensionen für den Hokyolaser fest. Größe x = 0.2, y= 0.2, z=0.2-->
   <link name="hokuyo">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
