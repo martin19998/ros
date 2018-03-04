@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot>
 
-
+<!-- Klassisches Plugin für den Drive Controller des Fahrzeugs -->
   <gazebo>
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
       <legacyMode>false</legacyMode>
@@ -19,6 +19,7 @@
     </plugin>
   </gazebo>
 
+<!-- Hier kann man die Farbe des Chassis ändern. Die Farben werden in dem material File definiert-->
  <gazebo reference="chassis">
     <material>Gazebo/Orange</material>
   </gazebo>
@@ -59,7 +60,8 @@
 </gazebo>
 
 
- <!-- hokuyo -->
+ <!-- hokuyo: hier kann man alle Einstellungen des Hokyo Sensors ändern. Für mehr Info einfach auf die Gazebo Plugin Seite gehen-->
+ 
   <gazebo reference="hokuyo">
     <sensor type="gpu_ray" name="head_hokuyo_sensor">
       <pose>0 0 0 0 0 0</pose>
